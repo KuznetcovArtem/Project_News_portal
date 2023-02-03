@@ -1,0 +1,42 @@
+{% extends 'flatpages/default.html' %}
+
+{% load custom_filters %}
+
+{% block title %}
+One News page
+{% endblock title %}
+
+{% block content %}
+    <h2>Один пост:</h2>
+<hr>
+        {% if posts_one %}
+<head>
+  <meta charset="utf-8">
+  <title>Таблица в центре окна</title>
+  <style>
+   table {
+    width: 800px; /* Ширина таблицы */
+    border: 1px solid black; /* Рамка вокруг таблицы */
+    margin: auto; /* Выравниваем таблицу по центру окна  */
+   }
+   td {
+    text-align: center; /* Выравниваем текст по центру ячейки */
+   }
+  </style>
+ </head>
+        <table>
+            <tr>
+                <td> Title </td>
+                <td> Text </td>
+                <td> Publish date </td>
+            </tr>
+            <tr>
+                <td>{{ posts_one.title }}</td>
+                <td>{{ posts_one.text|censor }}</td>
+                <td>{{ posts_one.dateCreation|date:'M d Y' }}</td>
+            </tr>
+        </table>
+    {% else %}
+        <h3>Что-то пошло не так!</h3>h2>
+    {% endif %}
+{% endblock content %}

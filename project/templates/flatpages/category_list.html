@@ -1,0 +1,95 @@
+{% extends 'flatpages/default.html' %}
+
+{% load custom_filters %}
+{% load custom_tags %}
+
+{% block title %}
+News page
+{% endblock title %}
+
+{% block content %}
+    <h2>Все посты:</h2>
+   <form action="" method="get">
+       {{ filterset.form.as_p }}
+       <input type="submit" value="Найти" />
+   </form>
+<h6>Количество постов: >>> {{ category_news_list|length }} <<<</h6>
+    {% if is_not_subscriber %}
+        <p class="text-center"><a href="{% url 'subscribe' postCategory.id %}" class="btn btn-secondary btn-sm">Subscribe</a></p>
+    {% endif %}
+<hr>
+    {% if perms.newsapp.add_post %}
+    <a href="{% url 'post_create' %}">Add post</a>
+    {% endif %}
+
+    {% if category_news_list %}
+<head>
+  <meta charset="utf-8">
+  <style>
+   table {
+    width: 800px; /* Ширина таблицы */
+    border: 1px solid black; /* Рамка вокруг таблицы */
+    margin: auto; /* Выравниваем таблицу по центру окна  */
+   }
+   td {
+    text-align: center; /* Выравниваем текст по центру ячейки */
+   }
+  </style>
+ </head>
+        <table>
+            <tr>
+                <td> Number </td>
+                <td> Category </td>
+                <td> Title </td>
+                <td> Text </td>
+                <td> Publish date </td>
+
+                {% if perms.newsapp.edit_post or perms.newsapp.delete_post %}
+                <td> Actions </td>
+                {% endif %}
+                            </tr>
+            {% for post in category_news_list %}
+            <tr>
+
+                <td><a href="/news/{{ post.pk }}">{{ post.pk }}</a></td>
+                <td>
+                    {% for cat in post.postCategory.all %}
+                        <a href="{% url 'category_list' pk=cat.id %}">{{ cat.name }}</a>
+                    {% endfor %}
+                </td>
+                <td>{{ post.title }}</td>
+                <td>{{ post.text|censor|truncatechars:20 }}</td>
+                <td>{{ post.dateCreation|date:'M d Y' }}</td>
+                <td>
+                    {% if perms.newsapp.change_post %}
+                    <a href="{% url 'post_edit' pk=post.id %}">Edit</a>
+                    {% endif %}
+                    {% if perms.newsapp.delete_post %}
+                    <a href="{% url 'post_delete' post.id %}">Delete</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <h3>Постов нет!</h3>
+    {% endif %}
+
+    {% if page_obj.has_previous %}
+       <a href="?{% url_replace page=1 %}">1</a>
+       {% if page_obj.previous_page_number != 1 %}
+           ...
+           <a href="?{% url_replace page=page_obj.previous_page_number %}">{{ page_obj.previous_page_number }}</a>
+       {% endif %}
+   {% endif %}
+
+    {{ page_obj.number }}
+
+    {% if page_obj.has_next %}
+       <a href="?{% url_replace page=page_obj.next_page_number %}">{{ page_obj.next_page_number }}</a>
+       {% if paginator.num_pages != page_obj.next_page_number %}
+           ...
+           <a href="?{% url_replace page=page_obj.paginator.num_pages %}">{{ page_obj.paginator.num_pages }}</a>
+       {% endif %}
+   {% endif %}
+{% endblock content %}
