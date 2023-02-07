@@ -1,13 +1,16 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.db.models import OuterRef, Exists
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
+from django.views import View
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post, Category, Subscription
 from .filters import PostFilter
 from .forms import PostForm
+
+from .tasks import post_created
 
 
 class PostList(ListView):
