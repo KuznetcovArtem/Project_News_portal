@@ -49,6 +49,7 @@ celery -A project worker -l INFO
 celery -A project worker -l INFO -B
 ```
 
+## Кеширование
 ### (8.3-8.4) Подключено кеширование:<br> на главную страницу /news/ одна минута;<br> кеширование статьи при изменении;<br> кеширование в шаблоне навигационных эл-тов (меню)<br>
 ````python
 # Filesystem caching
