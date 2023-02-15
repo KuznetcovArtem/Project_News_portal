@@ -49,6 +49,16 @@ celery -A project worker -l INFO
 celery -A project worker -l INFO -B
 ```
 
+### (8.3-8.4) Подключено кеширование:<br> на главную страницу /news/ одна минута;<br> кеширование статьи при изменении;<br> кеширование в шаблоне навигационных эл-тов (меню)<br>
+````python
+# Filesystem caching
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': os.path.join(BASE_DIR, 'cache_files'),
+    }
+}
+````
 ### Цель проекта
 
 Код написан в образовательных целях на онлайн-курсе "Fullstack разработчик на Python" [Skillfactory.ru](https://skillfactory.ru)
