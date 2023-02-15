@@ -51,4 +51,4 @@ celery -A project worker -l INFO -B
 
 ### Цель проекта
 
-Код написан в образовательных целяхна онлайн-курсе "Fullstack разработчик на Python" [Skillfactory.ru](https://skillfactory.ru)
+Код написан в образовательных целях на онлайн-курсе "Fullstack разработчик на Python" [Skillfactory.ru](https://skillfactory.ru)

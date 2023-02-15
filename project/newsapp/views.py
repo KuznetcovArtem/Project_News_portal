@@ -3,6 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.db.models import OuterRef, Exists
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
+from django.core.cache import cache
 from django.views import View
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -35,6 +36,14 @@ class PostDetail(DetailView):
     model = Post
     template_name = 'flatpages/one_news_page.html'
     context_object_name = 'posts_one'
+
+    def get_object(self, *args, **kwargs):
+        obj = cache.get(f'post-{self.kwargs["pk"]}', None)
+        if not obj:
+            obj = super().get_object(queryset=self.queryset)
+            cache.set(f'post-{self.kwargs["pk"]}', obj)
+
+        return obj
 
 
 class PostCreate(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
