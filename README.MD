@@ -60,6 +60,13 @@ CACHES = {
     }
 }
 ````
+
+## Уаравляющие команды
+### (11.4) Команда удаляет все новости из выбранной категории. <br>
+Имена категорий: Economy, Interesting, News, Sport
+````commandline
+python manage.py deleteallposts <имя_категории>
+````
 ### Цель проекта
 
 Код написан в образовательных целях на онлайн-курсе "Fullstack разработчик на Python" [Skillfactory.ru](https://skillfactory.ru)

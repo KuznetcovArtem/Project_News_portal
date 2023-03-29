@@ -1,4 +1,5 @@
 from django.core.management.base import BaseCommand
+from django.core.exceptions import ObjectDoesNotExist
 
 from newsapp.models import Category, Post
 
@@ -23,7 +24,7 @@ class Command(BaseCommand):
                 self.stdout.write(self.style.SUCCESS(
                     f'Все новости в категории {category.name} успешно удалены!'
                 ))
-            except category.DoesNotExist:
+            except ObjectDoesNotExist:
                 self.stdout.write(self.style.ERROR(
-                    f'Не удалось найти категорию {category.name}'
+                    f'Не удалось найти категорию {options["category"]}'
                 ))

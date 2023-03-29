@@ -1,2 +1,5 @@
 /.env
 /project/cache_files/
+/project/errors.log
+/project/general.log
+/project/security.log
