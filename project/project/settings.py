@@ -32,7 +32,7 @@ DEBUG = True
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -200,7 +200,7 @@ EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL_YANDEX')
 
-SERVER_EMAIL = "example@yandex.ru"
+SERVER_EMAIL = 'example@yandex.ru'
 
 # MANAGERS = [
 #     ('Ivan', 'ivan@yandex.ru'),
