@@ -67,6 +67,9 @@ CACHES = {
 ````commandline
 python manage.py deleteallposts <имя_категории>
 ````
+## Логирование
+### (13.4) general.log, errors.log, security.log
+
 ### Цель проекта
 
 Код написан в образовательных целях на онлайн-курсе "Fullstack разработчик на Python" [Skillfactory.ru](https://skillfactory.ru)
