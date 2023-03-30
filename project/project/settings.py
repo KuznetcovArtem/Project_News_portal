@@ -70,7 +70,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
+    'django.middleware.locale.LocaleMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 ]
 
@@ -154,6 +154,10 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale')
+]
 
 
 # Static files (CSS, JavaScript, Images)
@@ -271,14 +275,12 @@ LOGGING = {
         },
         'errors_log': {
             'level': 'ERROR',
-            'filters': ['require_debug_true'],
             'class': 'logging.FileHandler',
             'filename': 'errors.log',
             'formatter': 'extended_3'
         },
         'security_log': {
             'level': 'INFO',
-            'filters': ['require_debug_true'],
             'class': 'logging.FileHandler',
             'filename': 'security.log',
             'formatter': 'extended_4'
@@ -292,6 +294,7 @@ LOGGING = {
     },
     'loggers': {
         'django': {
+            'level': 'DEBUG',
             'handlers': ['console_DEBUG', 'console_WARNING', 'console_ERROR', 'general_log'],
             'propagate': True,
         },
