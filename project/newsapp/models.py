@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.db.models import Sum
 from django.urls import reverse
 from django.core.cache import cache
+from django.utils.translation import gettext as _
 
 
 class Author(models.Model):
@@ -33,7 +34,7 @@ class Author(models.Model):
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=64, unique=True)
+    name = models.CharField(max_length=64, unique=True, help_text=_('category names'))
     
     def __str__(self):
         return self.name

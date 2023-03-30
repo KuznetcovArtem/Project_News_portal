@@ -1,5 +1,7 @@
 {% extends 'flatpages/default.html' %}
 
+{% load i18n %}
+
 {% load custom_filters %}
 
 {% block title %}
@@ -7,7 +9,24 @@ One News page
 {% endblock title %}
 
 {% block content %}
-    <h2>Один пост:</h2>
+    <form action="{% url 'set_language' %}" method="POST"> {% csrf_token %}
+        <input type="hidden" name="next" value="{{ redirect_to }}">
+        {% get_current_language as LANGUAGE_CODE %}
+
+        <select name="language" id="">
+            {% get_available_languages as LANGUAGES %}
+            {% get_language_info_list for LANGUAGES as languages %}
+
+            {% for language in languages %}
+                <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected {% endif %}>
+                    {{ language.name_local }} - {{ language.code }}
+                </option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="set">
+    </form>
+<hr>
+    <h2>{% trans "One post" %}:</h2>
 <hr>
         {% if posts_one %}
 <head>
@@ -26,17 +45,17 @@ One News page
  </head>
         <table>
             <tr>
-                <td> Title </td>
-                <td> Text </td>
-                <td> Publish date </td>
+                <td> {% trans "Title" %} </td>
+                <td> {% trans "Text" %} </td>
+                <td> {% trans "Publish date" %} </td>
             </tr>
             <tr>
-                <td>{{ posts_one.title }}</td>
+                <td>{{ posts_one.title|censor }}</td>
                 <td>{{ posts_one.text|censor }}</td>
                 <td>{{ posts_one.dateCreation|date:'M d Y' }}</td>
             </tr>
         </table>
     {% else %}
-        <h3>Что-то пошло не так!</h3>h2>
+        <h3>{% trans "Something went wrong" %}!</h3>h2>
     {% endif %}
 {% endblock content %}

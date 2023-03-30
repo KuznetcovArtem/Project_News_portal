@@ -1,5 +1,8 @@
 {% extends 'flatpages/default.html' %}
 
+{% load i18n %}
+{% load tz %}
+
 {% load custom_filters %}
 {% load custom_tags %}
 
@@ -8,20 +11,56 @@ News page
 {% endblock title %}
 
 {% block content %}
-    <h2>Все посты:</h2>
+    <style>
+        body {background-color: {% if current_time.hour >= 19 or current_time.hour <= 7 %} darkcyan {% else %} powderblue {% endif %};}
+    </style>
+    <form action="{% url 'set_language' %}" method="POST"> {% csrf_token %}
+        <input type="hidden" name="next" value="{{ redirect_to }}">
+        {% get_current_language as LANGUAGE_CODE %}
+
+        <select name="language" id="">
+            {% get_available_languages as LANGUAGES %}
+            {% get_language_info_list for LANGUAGES as languages %}
+
+            {% for language in languages %}
+                <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected {% endif %}>
+                    {{ language.name_local }} - {{ language.code }}
+                </option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="set">
+    </form>
+<hr>
+    {% get_current_timezone as TIME_ZONE %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        <label for="timezone">{% trans "Time zone" %}:</label>
+        <select name="timezone">
+            {% for tz in timezones %}
+            <option value="{{ tz }}"{% if tz == TIME_ZONE %} selected{% endif %}>{{ tz }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Set">
+    </form>
+
+    {{ TIME_ZONE }}
+    {{ current_time|timezone:TIME_ZONE }}
+<hr>
+    <h2>{% trans "All posts" %}:</h2>
    <form action="" method="get">
        {{ filterset.form.as_p }}
-       <input type="submit" value="Найти" />
+       <input type="submit" value="{% trans 'Search'  %}" />
    </form>
-<h6>Количество постов: >>> {{ posts|length }} <<<</h6>
+<h6>{% trans "Number of posts" %}: >>> {{ posts|length }} <<<</h6>
 <hr>
     {% if perms.newsapp.add_post %}
-    <a href="{% url 'post_create' %}">Add post</a>
+    <a href="{% url 'post_create' %}">{% trans "Add post" %}</a>
     {% endif %}
 
     {% if posts %}
 <head>
   <meta charset="utf-8">
+
   <style>
    table {
     width: 800px; /* Ширина таблицы */
@@ -33,16 +72,17 @@ News page
    }
   </style>
  </head>
+<body>
         <table>
             <tr>
-                <td> Number </td>
-                <td> Category </td>
-                <td> Title </td>
-                <td> Text </td>
-                <td> Publish date </td>
+                <td> {% trans "Number" %} </td>
+                <td> {% trans "Category" %} </td>
+                <td> {% trans "Title" %} </td>
+                <td> {% trans "Text" %} </td>
+                <td> {% trans "Publish date" %} </td>
 
                 {% if perms.newsapp.edit_post or perms.newsapp.delete_post %}
-                <td> Actions </td>
+                <td> {% trans "Actions" %} </td>
                 {% endif %}
                             </tr>
             {% for post in posts %}
@@ -54,22 +94,22 @@ News page
                         <a href="{% url 'category_list' pk=cat.id %}">{{ cat.name }}</a>
                     {% endfor %}
                 </td>
-                <td>{{ post.title }}</td>
+                <td>{{ post.title|censor }}</td>
                 <td>{{ post.text|censor|truncatechars:20 }}</td>
                 <td>{{ post.dateCreation|date:'M d Y' }}</td>
                 <td>
                     {% if perms.newsapp.change_post %}
-                    <a href="{% url 'post_edit' pk=post.id %}">Edit</a>
+                    <a href="{% url 'post_edit' pk=post.id %}">{% trans "Edit" %}</a>
                     {% endif %}
                     {% if perms.newsapp.delete_post %}
-                    <a href="{% url 'post_delete' post.id %}">Delete</a>
+                    <a href="{% url 'post_delete' post.id %}">{% trans "Delete" %}</a>
                     {% endif %}
                 </td>
             </tr>
             {% endfor %}
         </table>
     {% else %}
-        <h3>Постов нет!</h3>
+        <h3>{% trans "No posts" %}!</h3>
     {% endif %}
 
     {% if page_obj.has_previous %}
@@ -90,3 +130,4 @@ News page
        {% endif %}
    {% endif %}
 {% endblock content %}
+</body>

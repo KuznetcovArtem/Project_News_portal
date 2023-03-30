@@ -1,5 +1,7 @@
 {% extends 'flatpages/default.html' %}
 
+{% load i18n %}
+
 {% load custom_filters %}
 {% load custom_tags %}
 
@@ -8,12 +10,29 @@ News page
 {% endblock title %}
 
 {% block content %}
-    <h2>Все посты:</h2>
+<form action="{% url 'set_language' %}" method="POST"> {% csrf_token %}
+        <input type="hidden" name="next" value="{{ redirect_to }}">
+        {% get_current_language as LANGUAGE_CODE %}
+
+        <select name="language" id="">
+            {% get_available_languages as LANGUAGES %}
+            {% get_language_info_list for LANGUAGES as languages %}
+
+            {% for language in languages %}
+                <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected {% endif %}>
+                    {{ language.name_local }} - {{ language.code }}
+                </option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="set">
+    </form>
+<hr>
+    <h2>{% trans "All posts" %}:</h2>
    <form action="" method="get">
        {{ filterset.form.as_p }}
        <input type="submit" value="Найти" />
    </form>
-<h6>Количество постов: >>> {{ category_news_list|length }} <<<</h6>
+<h6>{% trans "Number of posts" %}: >>> {{ category_news_list|length }} <<<</h6>
     {% if is_not_subscriber %}
         <p class="text-center"><a href="{% url 'subscribe' postCategory.id %}" class="btn btn-secondary btn-sm">Subscribe</a></p>
     {% endif %}
@@ -38,14 +57,14 @@ News page
  </head>
         <table>
             <tr>
-                <td> Number </td>
-                <td> Category </td>
-                <td> Title </td>
-                <td> Text </td>
-                <td> Publish date </td>
+                <td> {% trans "Number" %} </td>
+                <td> {% trans "Category" %} </td>
+                <td> {% trans "Title" %} </td>
+                <td> {% trans "Text" %} </td>
+                <td> {% trans "Publish date" %} </td>
 
                 {% if perms.newsapp.edit_post or perms.newsapp.delete_post %}
-                <td> Actions </td>
+                <td> {% trans "Actions" %} </td>
                 {% endif %}
                             </tr>
             {% for post in category_news_list %}
@@ -62,17 +81,17 @@ News page
                 <td>{{ post.dateCreation|date:'M d Y' }}</td>
                 <td>
                     {% if perms.newsapp.change_post %}
-                    <a href="{% url 'post_edit' pk=post.id %}">Edit</a>
+                    <a href="{% url 'post_edit' pk=post.id %}">{% trans "Edit" %}</a>
                     {% endif %}
                     {% if perms.newsapp.delete_post %}
-                    <a href="{% url 'post_delete' post.id %}">Delete</a>
+                    <a href="{% url 'post_delete' post.id %}">{% trans "Delete" %}</a>
                     {% endif %}
                 </td>
             </tr>
             {% endfor %}
         </table>
     {% else %}
-        <h3>Постов нет!</h3>
+        <h3>{% trans "No posts" %}!</h3>
     {% endif %}
 
     {% if page_obj.has_previous %}

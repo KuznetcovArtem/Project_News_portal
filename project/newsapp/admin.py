@@ -1,5 +1,14 @@
 from django.contrib import admin
-from .models import Author, Category, Post, PostCategory, Comment
+from newsapp.models import Author, Category, Post, PostCategory, Comment
+from modeltranslation.admin import TranslationAdmin
+
+
+class CategoryAdmin(TranslationAdmin):
+    model = Category
+
+
+class PostAdmin(TranslationAdmin):
+    model = Post
 
 
 class AuthorAdmin(admin.ModelAdmin):

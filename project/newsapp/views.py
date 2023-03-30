@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.db.models import OuterRef, Exists
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.core.cache import cache
@@ -11,7 +12,9 @@ from .models import Post, Category, Subscription
 from .filters import PostFilter
 from .forms import PostForm
 
-from .tasks import post_created
+from django.utils import timezone
+
+import pytz
 
 
 class PostList(ListView):
@@ -27,9 +30,17 @@ class PostList(ListView):
         return self.filterset.qs
 
     def get_context_data(self, **kwargs):
+        curent_time = timezone.now()
+
         context = super().get_context_data(**kwargs)
         context['filterset'] = self.filterset
+        context['current_time'] = timezone.now()
+        context['timezones'] = pytz.common_timezones
         return context
+
+    def post(self, request):
+        request.session['django_timezone'] = request.POST['timezone']
+        return redirect('/news')
 
 
 class PostDetail(DetailView):

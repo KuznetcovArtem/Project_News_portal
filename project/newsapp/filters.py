@@ -21,6 +21,7 @@ class PostFilter(FilterSet):
     # поиск позже указываемой даты
     creation_after = DateFilter(
         field_name='dateCreation',
+        label='Date Creation',
         lookup_expr='gt',
         widget=DateInput(
             format='%Y-%m-%d',
@@ -31,5 +32,5 @@ class PostFilter(FilterSet):
     class Meta:
         model = Post
         fields = {
-           'title': ['icontains'], # поиск по названию
+            'title': ['icontains'], # поиск по названию
            }

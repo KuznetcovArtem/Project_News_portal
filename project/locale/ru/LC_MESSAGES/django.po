@@ -1,0 +1,107 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-03-31 00:17+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: fpages/admin.py:11
+msgid "Advanced options"
+msgstr "Расширенные опции"
+
+#: newsapp/models.py:37
+msgid "category names"
+msgstr "Имя категории"
+
+#: templates/flatpages/category_list.html:30
+#: templates/flatpages/news_page.html:49
+msgid "All posts"
+msgstr "Все посты"
+
+#: templates/flatpages/category_list.html:35
+#: templates/flatpages/news_page.html:54
+msgid "Number of posts"
+msgstr "Количество постов"
+
+#: templates/flatpages/category_list.html:60
+#: templates/flatpages/news_page.html:78
+msgid "Number"
+msgstr "Номер"
+
+#: templates/flatpages/category_list.html:61
+#: templates/flatpages/news_page.html:79
+msgid "Category"
+msgstr "Категория"
+
+#: templates/flatpages/category_list.html:62
+#: templates/flatpages/news_page.html:80
+#: templates/flatpages/one_news_page.html:48
+msgid "Title"
+msgstr "Заголовок"
+
+#: templates/flatpages/category_list.html:63
+#: templates/flatpages/news_page.html:81
+#: templates/flatpages/one_news_page.html:49
+msgid "Text"
+msgstr "Текст"
+
+#: templates/flatpages/category_list.html:64
+#: templates/flatpages/news_page.html:82
+#: templates/flatpages/one_news_page.html:50
+msgid "Publish date"
+msgstr "Дата публикации"
+
+#: templates/flatpages/category_list.html:67
+#: templates/flatpages/news_page.html:85
+msgid "Actions"
+msgstr "Действия"
+
+#: templates/flatpages/category_list.html:84
+#: templates/flatpages/news_page.html:102
+msgid "Edit"
+msgstr "Править"
+
+#: templates/flatpages/category_list.html:87
+#: templates/flatpages/news_page.html:105
+msgid "Delete"
+msgstr "Удалить"
+
+#: templates/flatpages/category_list.html:94
+#: templates/flatpages/news_page.html:112
+msgid "No posts"
+msgstr "Постов нет"
+
+#: templates/flatpages/news_page.html:37
+msgid "Time zone"
+msgstr "Часовой пояс"
+
+#: templates/flatpages/news_page.html:52
+msgid "Search"
+msgstr "Найти"
+
+#: templates/flatpages/news_page.html:57
+msgid "Add post"
+msgstr "Добавить пост"
+
+#: templates/flatpages/one_news_page.html:29
+msgid "One post"
+msgstr "Один пост"
+
+#: templates/flatpages/one_news_page.html:59
+msgid "Something went wrong"
+msgstr "Что-то пошло не так!"
